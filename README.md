@@ -23,7 +23,7 @@ To use Leap Tracker you need Python installed `3.6 or newer`.
 ## Installation
 - Download the release ZIP file or clone the repository to your local machine.
 - Navigate to the extracted zip directory.
-- Run the install.bat on Windows or install.sh on Linux. This will set up the necessary environment and install dependencies.
+- Run the `install.bat` on Windows or `install.sh` on Linux. This will set up the necessary environment and install dependencies.
 
 ## Usage
 - Connect Leap Motion Controller device to available USB Port.
