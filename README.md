@@ -17,7 +17,8 @@ Download latest release [here](https://github.com/serifpersia/leap-headtracker/r
 ## Requirements
 Leap Motion Controller needs to be unlocked to be used as a UVC device.
 Unlock and Restore tools are provided and Windows machine is needed to use executables to unlock or restore Leap Motion Controller device.
-To use Leap Tracker you need a newer version of Python installed `3.10, 3.12`.
+
+To use Leap Tracker you need Python installed `3.6 or newer`.
 
 ## Installation
 - Download the release ZIP file or clone the repository to your local machine.
