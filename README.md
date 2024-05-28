@@ -3,7 +3,7 @@
 ![image](https://github.com/serifpersia/leap-headtracker/assets/62844718/2d83c7e0-04af-46d9-b3a5-51206f3f7e0d)
 
 <h1><span class="piano-text" style="color: white;">Leap Tracker</span>
-
+  
 [![Release](https://img.shields.io/github/release/serifpersia/leap-headtracker.svg?style=flat-square)](https://github.com/serifpersia/leap-headtracker-esp32/releases)
 [![License](https://img.shields.io/github/license/serifpersia/leap-headtracker?color=blue&style=flat-square)](https://raw.githubusercontent.com/serifpersia/leap-headtracker/master/LICENSE)
 
@@ -31,6 +31,11 @@ To use Leap Tracker you need Python installed `3.6 or newer`.
 - Leap Motion Controller video feed preview should be seen, use Settings button to adjust the image feed for better tracking `exposure, gamma, leds, rotatiom, zoom`.
 Launch opentrack software and use UDP over network as the source for tracking data, press `Start` button and the pink octopus tracking indicator should now move as well as pitch, yaw and roll data points should change based on head movement. Adjust Mapping curves for pitch yaw and roll, for most stable tracking only enable yaw tracking and adjust the curve to desired degrees for your game.Keybinding shortcut for resetting tracking position is recommended in opentrack.
 - You can use `Q` keybind when Leap Tracker window is focused window to quit the app.
+
+## Demo
+https://github.com/serifpersia/leap-headtracker/assets/62844718/287d6e26-af23-464d-bae8-0a9dcee0d74a
+
+</div>
 
 ## License
 This project is licensed under the [MIT License](LICENSE).
