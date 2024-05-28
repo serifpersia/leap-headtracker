@@ -89,10 +89,18 @@ def extract_position(landmarks):
 
     return x, y, z
 
+# Retrieve calibration data using DSHOW backend
+capResolution = (640, 480)
+cam = cv2.VideoCapture(0 + cv2.CAP_DSHOW)
+cam.set(cv2.CAP_PROP_FRAME_WIDTH, capResolution[0])
+cam.set(cv2.CAP_PROP_FRAME_HEIGHT, capResolution[1])
+calibration = leapuvc.retrieveLeapCalibration(cam, capResolution)
+cam.release()
 
-# Start the Leap Capture Thread
-leap = leapuvc.leapImageThread()
+# Start the Leap Capture Thread with MSMF backend
+leap = leapuvc.leapImageThread(resolution=(640, 480))
 leap.start()
+leap.calibration = calibration  # Use the retrieved calibration data
 
 # Function to check if the 'Settings' window already exists
 def is_settings_window_open():
@@ -152,9 +160,14 @@ with mp_face_mesh.FaceMesh(
                 hdr_on = cv2.getTrackbarPos('HDR', 'Settings')
                 rotate_on = cv2.getTrackbarPos('Rotate', 'Settings')
                 zoom_level = cv2.getTrackbarPos('Zoom', 'Settings') + 1.0
-
+            
             # Apply zoom to the left camera image
             zoomed_image = apply_zoom(left_right_image[0], zoom_level)
+
+            # Rectify
+            maps = leap.calibration['left']["undistortMaps"]
+            zoomed_image = cv2.remap(zoomed_image, maps[0], maps[1], cv2.INTER_LINEAR)
+            
             # Resize the Leap image to match the area in the window
             resized_image = cv2.resize(zoomed_image, (200, 200))
 
