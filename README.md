@@ -1,6 +1,6 @@
 <div align="center">
 
-![leaptracker](https://github.com/serifpersia/leap-headtracker/assets/62844718/515eddf8-9f61-4832-a2f9-3827e5781023)
+![image](https://github.com/serifpersia/leap-headtracker/assets/62844718/2d83c7e0-04af-46d9-b3a5-51206f3f7e0d)
 
 <h1><span class="piano-text" style="color: white;">Leap Tracker</span>
 
