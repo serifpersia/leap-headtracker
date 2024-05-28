@@ -81,11 +81,11 @@ def extract_position(landmarks):
     center_y = (left_eye[1] + right_eye[1]) / 2
     
     # Adjust x and y based on the center point between the eyes
-    x = nose_tip[0] - center_x * 100
-    y = nose_tip[1] - center_y * 100
+    x = nose_tip[0] - center_x
+    y = nose_tip[1] - center_y
     
     # Z coordinate remains the same
-    z = nose_tip[2] * 1000
+    z = nose_tip[2]
 
     return x, y, z
 
@@ -106,7 +106,7 @@ analog_gain_level = 0
 digital_gain_level = 0
 hdr_on = 0
 rotate_on = 1
-zoom_level = 3
+zoom_level = 4
 
 # Create main window with dark gray background
 window = np.full((450, 300, 3), 255, dtype=np.uint8)
