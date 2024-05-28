@@ -1,4 +1,13 @@
-# Leap Tracker
+<div align="center">
+
+![leaptracker](https://github.com/serifpersia/leap-headtracker/assets/62844718/515eddf8-9f61-4832-a2f9-3827e5781023)
+
+<h1><span class="piano-text" style="color: white;">Leap Tracker</span>
+
+[![Release](https://img.shields.io/github/release/serifpersia/pianolux-esp32.svg?style=flat-square)](https://github.com/serifpersia/leap-headtracker-esp32/releases)
+[![License](https://img.shields.io/github/license/serifpersia/pianolux-esp32?color=blue&style=flat-square)](https://raw.githubusercontent.com/serifpersia/leap-headtracker/master/LICENSE)
+
+</div>
 
 Leap Tracker is a head tracking application that uses Leap Motion controller as the video source. It enables users to track head movements in real-time and transmit the tracking data over UDP network. The tracked data can be used with OpenTrack software.
 
