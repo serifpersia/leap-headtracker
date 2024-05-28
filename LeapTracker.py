@@ -36,17 +36,17 @@ def on_click(event, x, y, flags, param):
   
 # Function to add pose information text to the image
 def add_pose_info_text(image, x, y, z, pitch, yaw, roll):
-    text_color = (0, 255, 0)  # White color
+    text_color = (255, 255, 255)  # White color
     font = cv2.FONT_HERSHEY_SIMPLEX
     font_scale = 1
     thickness = 4
 
-    cv2.putText(image, f"X: {np.round(x, 2)}", (15, 50), font, font_scale, text_color, thickness)
-    cv2.putText(image, f"Y: {np.round(y, 2)}", (15, 100), font, font_scale, text_color, thickness)
-    cv2.putText(image, f"Z: {np.round(z, 2)}", (15, 150), font, font_scale, text_color, thickness)
-    cv2.putText(image, f"Pitch: {np.round(pitch, 2)}", (15, 200), font, font_scale, text_color, thickness)
-    cv2.putText(image, f"Yaw: {np.round(yaw, 2)}", (15, 250), font, font_scale, text_color, thickness)
-    cv2.putText(image, f"Roll: {np.round(roll, 2)}", (15, 300), font, font_scale, text_color, thickness)
+    cv2.putText(image, f"X: {np.round(x, 2)}", (15, 350), font, font_scale, text_color, thickness)
+    cv2.putText(image, f"Y: {np.round(y, 2)}", (15, 400), font, font_scale, text_color, thickness)
+    cv2.putText(image, f"Z: {np.round(z, 2)}", (15, 450), font, font_scale, text_color, thickness)
+    cv2.putText(image, f"Pitch: {np.round(pitch, 2)}", (400, 350), font, font_scale, text_color, thickness)
+    cv2.putText(image, f"Yaw: {np.round(yaw, 2)}", (400, 400), font, font_scale, text_color, thickness)
+    cv2.putText(image, f"Roll: {np.round(roll, 2)}", (400, 450), font, font_scale, text_color, thickness)
 
 # Function to calculate pitch, yaw, and roll angles
 def calculate_pose(landmarks):
