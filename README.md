@@ -30,7 +30,7 @@ To use Leap Tracker you need Python installed `3.6 or newer`.
 - Run Leap Tracker application using `LeapTracker.bat` on Windows or `LeapTracker.sh` on Linux
 - Leap Motion Controller video feed preview should be seen, use Settings button to adjust the image feed for better tracking `exposure, gamma, leds, rotatiom, zoom`.
 Launch opentrack software and use UDP over network as the source for tracking data, press `Start` button and the pink octopus tracking indicator should now move as well as pitch, yaw and roll data points should change based on head movement. Adjust Mapping curves for pitch yaw and roll, for most stable tracking only enable yaw tracking and adjust the curve to desired degrees for your game.Keybinding shortcut for resetting tracking position is recommended in opentrack.
-- You can use `Q` keybind when Leap Tracker window is focused window to quit the app or hold `R` keybind for few seconds to recalibrate center pose.
+- You can use `Q` keybind when Leap Tracker window is focused window to quit the app.
 
 ## License
 This project is licensed under the [MIT License](LICENSE).
