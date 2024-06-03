@@ -4,7 +4,7 @@
 
 <h1><span class="piano-text" style="color: white;">Leap Tracker</span>
   
-[![Release](https://img.shields.io/github/release/serifpersia/leap-headtracker.svg?style=flat-square)](https://github.com/serifpersia/leap-headtracker-esp32/releases)
+[![Release](https://img.shields.io/github/release/serifpersia/leap-headtracker.svg?style=flat-square)](https://github.com/serifpersia/leap-headtracker/releases)
 [![License](https://img.shields.io/github/license/serifpersia/leap-headtracker?color=blue&style=flat-square)](https://raw.githubusercontent.com/serifpersia/leap-headtracker/master/LICENSE)
 
 </div>
