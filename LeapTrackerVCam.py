@@ -15,9 +15,21 @@ def apply_zoom(image, zoom_factor):
     resized_image = cv2.resize(cropped_image, (width, height), interpolation=cv2.INTER_LINEAR)
     return resized_image
 
-# Start the Leap Capture Thread
-leap = leapuvc.leapImageThread()
+# Retrieve calibration data using DSHOW backend
+capResolution = (640, 480)
+cam = cv2.VideoCapture(0 + cv2.CAP_DSHOW)
+cam.set(cv2.CAP_PROP_FRAME_WIDTH, capResolution[0])
+cam.set(cv2.CAP_PROP_FRAME_HEIGHT, capResolution[1])
+calibration = leapuvc.retrieveLeapCalibration(cam, capResolution)
+cam.release()
+
+# Start the Leap Capture Thread with MSMF backend
+leap = leapuvc.leapImageThread(resolution=(640, 480))
 leap.start()
+leap.calibration = calibration
+
+cam_id = 0
+rectify_on = 0
 
 # Create a virtual camera with the specified backend
 with pyvirtualcam.Camera(width=640, height=480, fps=60) as cam:
@@ -25,8 +37,10 @@ with pyvirtualcam.Camera(width=640, height=480, fps=60) as cam:
     
     # Define Various Camera Control Settings
     cv2.namedWindow('Settings')
-    cv2.resizeWindow('Settings', 410, 256)          # Set window size explicitly
+    cv2.resizeWindow('Settings', 400, 385)
     cv2.moveWindow('Settings', 0, 0)
+    cv2.createTrackbar('Camera', 'Settings', cam_id, 1, lambda x: None)
+    cv2.createTrackbar('Rectify', 'Settings', rectify_on, 1, lambda x: None)
     cv2.createTrackbar('Exposure',  'Settings', 1000,  32222, leap.setExposure)   # Sets the exposure time in microseconds
     cv2.createTrackbar('LEDs',      'Settings', 0, 1,  lambda a: (leap.setLeftLED(a), leap.setCenterLED(a), leap.setRightLED(a))) # Turns on the IR LEDs
     cv2.createTrackbar('Gamma',     'Settings', 1, 1,  leap.setGammaEnabled)      # Applies a sqrt(x) contrast-reducing curve in 10-bit space
@@ -42,15 +56,34 @@ with pyvirtualcam.Camera(width=640, height=480, fps=60) as cam:
         if newFrame:
             # Get the current zoom level from the trackbar
             zoom_level = cv2.getTrackbarPos('Zoom', 'Settings') + 1.0
+            rectify_on = cv2.getTrackbarPos('Rectify', 'Settings')
+            cam_id = cv2.getTrackbarPos('Camera', 'Settings')
+
+            CAM_INDEX = 0
             
+            if cam_id:
+                CAM_INDEX = 0
+            else:
+                CAM_INDEX = 1
+                
+            if rectify_on:
+                if CAM_INDEX == 1:
+                    calibration = 'right'
+                else:
+                    calibration = 'left'
+                maps = leap.calibration[calibration]["undistortMaps"]
+                rectified_image = cv2.remap(left_right_image[CAM_INDEX], maps[0], maps[1], interpolation=cv2.INTER_LINEAR)
+                processed_image = rectified_image
+            else:
+                processed_image = left_right_image[CAM_INDEX]
+                
             # Apply zoom to the left camera image
-            zoomed_image = apply_zoom(left_right_image[0], zoom_level)
-            
-            # Add the missing channel dimension to the frame
+            zoomed_image = apply_zoom(processed_image, zoom_level)
             zoomed_image = cv2.merge((zoomed_image, zoomed_image, zoomed_image))
+
             # Send the frame to the virtual camera
             cam.send(zoomed_image)
-        if cv2.waitKey(1) == 27:  # Check if the 'Esc' key is pressed (27 is the ASCII code for 'Esc')
+        if cv2.waitKey(1) == ord('q'):  # Check if the 'Esc' key is pressed (27 is the ASCII code for 'Esc')
             break
 
     cv2.destroyAllWindows()

@@ -22,7 +22,9 @@ def on_click(event, x, y, flags, param):
     if event == cv2.EVENT_LBUTTONDOWN and 100 <= x <= 200 and 350 <= y <= 400:
         if not is_settings_window_open():
             cv2.namedWindow('Settings')
-            cv2.resizeWindow('Settings', 400, 350)
+            cv2.resizeWindow('Settings', 400, 385)
+            cv2.moveWindow('Settings', 0, 0)
+            cv2.createTrackbar('Camera', 'Settings', cam_id, 1, lambda x: None)
             cv2.createTrackbar('Rectify', 'Settings', rectify_on, 1, lambda x: None)
             cv2.createTrackbar('Exposure', 'Settings', exposure_level, 32222, leap.setExposure)
             cv2.createTrackbar('LEDs', 'Settings', leds_on, 1, lambda a: (leap.setLeftLED(a), leap.setCenterLED(a), leap.setRightLED(a)))
@@ -90,6 +92,7 @@ def is_settings_window_open():
     return cv2.getWindowProperty('Settings', cv2.WND_PROP_VISIBLE) > 0
 
 # Initialize settings
+cam_id = 0
 rectify_on = 0
 exposure_level = 1000
 leds_on = 1
@@ -122,8 +125,6 @@ face_mesh = mp.solutions.face_mesh
 mp_drawing = mp.solutions.drawing_utils
 drawing_spec = mp_drawing.DrawingSpec(thickness=1, circle_radius=1)
 
-CAM_INDEX = 1
-
 with mp_face_mesh.FaceMesh(
     max_num_faces=1,
     refine_landmarks=True,
@@ -134,6 +135,7 @@ with mp_face_mesh.FaceMesh(
         new_frame, left_right_image = leap.read()
         if new_frame:
             if is_settings_window_open():
+                cam_id = cv2.getTrackbarPos('Camera', 'Settings')
                 rectify_on = cv2.getTrackbarPos('Rectify', 'Settings')
                 exposure_level = cv2.getTrackbarPos('Exposure', 'Settings')
                 leds_on = cv2.getTrackbarPos('LEDs', 'Settings')
@@ -143,9 +145,21 @@ with mp_face_mesh.FaceMesh(
                 hdr_on = cv2.getTrackbarPos('HDR', 'Settings')
                 rotate_on = cv2.getTrackbarPos('Rotate', 'Settings')
                 zoom_level = cv2.getTrackbarPos('Zoom', 'Settings') + 1.0
-
+                
+            CAM_INDEX = 0
+            
+            if cam_id:
+                CAM_INDEX = 0
+            else:
+                CAM_INDEX = 1
+                
             if rectify_on:
-                maps = leap.calibration['left']["undistortMaps"]
+                if CAM_INDEX == 1:
+                    calibration = 'right'
+                else:
+                    calibration = 'left'
+                    
+                maps = leap.calibration[calibration]["undistortMaps"]
                 rectified_image = cv2.remap(left_right_image[CAM_INDEX], maps[0], maps[1], interpolation=cv2.INTER_LINEAR)
                 processed_image = rectified_image
             else:
@@ -178,3 +192,5 @@ with mp_face_mesh.FaceMesh(
             window[100:300, 50:250] = resized_image_with_overlay
             cv2.imshow('LeapTracker', window)
             cv2.setMouseCallback('LeapTracker', on_click)
+            
+    cv2.destroyAllWindows()
