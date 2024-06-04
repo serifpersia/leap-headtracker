@@ -32,6 +32,10 @@ To use Leap Tracker you need Python installed `3.6 or newer`.
 Launch opentrack software and use UDP over network as the source for tracking data, press `Start` button and the pink octopus tracking indicator should now move as well as pitch, yaw and roll data points should change based on head movement. Adjust Mapping curves for pitch yaw and roll, for most stable tracking only enable yaw tracking and adjust the curve to desired degrees for your game.Keybinding shortcut for resetting tracking position is recommended in opentrack.
 - You can use `Q` keybind when Leap Tracker window is focused window to quit the app. I provided basic-yaw_only profile for opentrack just put it in Documents/opentrack and restart opentrack to see it
 
+- Use VCam script to send direct leap feed to a virtual Camera for windows users if you don't have OBS already installed use install script in `windows-obs-vcam` directory to install it.
+You can use Pointracker in opentrack or something else that you want to use leap video camera feed with. Camera controls are still available to modify the video feed of the leap motion controller device.
+[OBS](https://github.com/obsproject/obs-studio)
+
 ## Demo
 https://github.com/serifpersia/leap-headtracker/assets/62844718/287d6e26-af23-464d-bae8-0a9dcee0d74a
 
